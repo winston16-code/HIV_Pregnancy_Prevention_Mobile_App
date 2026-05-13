@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "MASCOT",
+    "slug": "mascot-mhealth",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#0F766E"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "org.ceshhar.mascot",
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "Use Face ID to keep your health information private."
+      }
+    },
+    "android": {
+      "package": "org.ceshhar.mascot",
+      "adaptiveIcon": {
+        "backgroundColor": "#0F766E"
+      },
+      "permissions": [
+        "USE_BIOMETRIC",
+        "USE_FINGERPRINT"
+      ]
+    },
+    "plugins": [
+      "expo-local-authentication",
+      "expo-notifications",
+      "expo-secure-store",
+      "expo-font"
+    ],
+    "extra": {
+      "appName": "MASCOT",
+      "supportEmail": "mascot.hackathon@ceshhar.org"
+    }
+  }
+}
