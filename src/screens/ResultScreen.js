@@ -5,7 +5,7 @@ import { Screen } from '../components/Screen';
 import { Card } from '../components/Card';
 import { PrimaryButton } from '../components/PrimaryButton';
 import { RiskBadge } from '../components/RiskBadge';
-import { colors, spacing } from '../theme/colors';
+import { colors, spacing, radius } from '../theme/colors';
 import { useAppStore } from '../state/useAppStore';
 import { t } from '../logic/i18n';
 import { firstQuestionId } from '../logic/riskEngine';
