@@ -5,7 +5,9 @@
     "version": "0.1.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
+    "icon": "./assets/icon.png",
     "splash": {
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#0F766E"
     },
@@ -22,11 +24,14 @@
     "android": {
       "package": "org.ceshhar.mascot",
       "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#0F766E"
       },
       "permissions": [
         "USE_BIOMETRIC",
-        "USE_FINGERPRINT"
+        "USE_FINGERPRINT",
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT"
       ]
     },
     "plugins": [
@@ -37,7 +42,11 @@
     ],
     "extra": {
       "appName": "MASCOT",
-      "supportEmail": "mascot.hackathon@ceshhar.org"
-    }
+      "supportEmail": "mascot.hackathon@ceshhar.org",
+      "eas": {
+        "projectId": "a052debf-4281-447f-b5e9-ba94c03c70d3"
+      }
+    },
+    "owner": "tavongaurayayi"
   }
 }

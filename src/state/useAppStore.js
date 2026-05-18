@@ -12,6 +12,11 @@ const defaultState = {
   quizProgress: {},
   reminders: [],
   chatHistory: [],
+  periodStartDate: null,
+  cycleLength: 28,
+  periodDuration: 5,
+  userPasscode: null,
+  isAuthenticated: false,
 };
 
 function randomAnonId() {
@@ -56,6 +61,28 @@ export const useAppStore = create((set, get) => ({
   setAppLock: (enabled) => {
     set({ appLockEnabled: enabled });
     get().persist();
+  },
+
+  setPeriodData: (startDate, length, duration) => {
+    set({ periodStartDate: startDate, cycleLength: length, periodDuration: duration });
+    get().persist();
+  },
+
+  registerUser: (username, PIN) => {
+    set({ anonId: username, userPasscode: PIN, isAuthenticated: true, appLockEnabled: true });
+    get().persist();
+  },
+
+  loginUser: (PIN) => {
+    if (get().userPasscode === PIN) {
+      set({ isAuthenticated: true });
+      return true;
+    }
+    return false;
+  },
+
+  logoutUser: () => {
+    set({ isAuthenticated: false });
   },
 
   addResult: (result) => {

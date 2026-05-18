@@ -1,12 +1,13 @@
 import 'react-native-gesture-handler';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, ActivityIndicator, AppState } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as Notifications from 'expo-notifications';
 
 import RootNavigator from './src/navigation/RootNavigator';
 import OnboardingScreen from './src/screens/OnboardingScreen';
-import LockScreen from './src/screens/LockScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
+import LoginScreen from './src/screens/LoginScreen';
 import { useAppStore } from './src/state/useAppStore';
 import { colors } from './src/theme/colors';
 
@@ -22,22 +23,19 @@ export default function App() {
   const hydrated = useAppStore((s) => s.hydrated);
   const hasOnboarded = useAppStore((s) => s.hasOnboarded);
   const appLockEnabled = useAppStore((s) => s.appLockEnabled);
+  const userPasscode = useAppStore((s) => s.userPasscode);
+  const isAuthenticated = useAppStore((s) => s.isAuthenticated);
   const hydrate = useAppStore((s) => s.hydrate);
-
-  const [locked, setLocked] = useState(false);
+  const logoutUser = useAppStore((s) => s.logoutUser);
 
   useEffect(() => {
     hydrate();
   }, []);
 
   useEffect(() => {
-    setLocked(appLockEnabled);
-  }, [appLockEnabled]);
-
-  useEffect(() => {
     const sub = AppState.addEventListener('change', (state) => {
       if (state === 'background' && appLockEnabled) {
-        setLocked(true);
+        logoutUser();
       }
     });
     return () => sub.remove();
@@ -55,8 +53,10 @@ export default function App() {
     <SafeAreaProvider>
       {!hasOnboarded ? (
         <OnboardingScreen />
-      ) : locked ? (
-        <LockScreen onUnlock={() => setLocked(false)} />
+      ) : !userPasscode ? (
+        <RegisterScreen />
+      ) : !isAuthenticated ? (
+        <LoginScreen />
       ) : (
         <RootNavigator />
       )}

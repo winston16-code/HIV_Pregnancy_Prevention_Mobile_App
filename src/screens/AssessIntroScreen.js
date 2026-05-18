@@ -11,6 +11,24 @@ import { firstQuestionId } from '../logic/riskEngine';
 
 export default function AssessIntroScreen({ navigation }) {
   const language = useAppStore((s) => s.language);
+  const localIntro = {
+    en: {
+      time: 'Takes 1-2 minutes',
+      private: 'Stays on this phone',
+      guidance: 'Not a diagnosis — guidance only',
+    },
+    sn: {
+      time: 'Tora mineti rimwe kana maviri',
+      private: 'Zvinoramba pafoni ino',
+      guidance: 'Kusiri kuongororwa nachiremba',
+    },
+    nd: {
+      time: 'Thatha umzuzu owodwa loba emibili',
+      private: 'Kusala kule foni',
+      guidance: 'Akusokuhlola kukadokotela',
+    }
+  };
+  const dict = localIntro[language] || localIntro.en;
 
   return (
     <Screen>
@@ -20,9 +38,9 @@ export default function AssessIntroScreen({ navigation }) {
         <Text style={styles.text}>{t('assessIntroBody', language)}</Text>
 
         <Card style={{ marginTop: spacing.lg }}>
-          <Row icon="time-outline" text="2 minutes" />
-          <Row icon="lock-closed-outline" text="Stays on this phone" />
-          <Row icon="medkit-outline" text="Not a diagnosis — guidance only" />
+          <Row icon="time-outline" text={dict.time} />
+          <Row icon="lock-closed-outline" text={dict.private} />
+          <Row icon="medkit-outline" text={dict.guidance} />
         </Card>
 
         <View style={{ flex: 1 }} />

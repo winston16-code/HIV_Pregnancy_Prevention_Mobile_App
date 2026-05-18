@@ -4,9 +4,9 @@ import { questions, questionsById } from '../data/questions';
 // push to moderate, and combinations of unprotected sex / multiple partners /
 // no testing land in high. Tuned by hand against a small set of personas.
 const HIV_LOW_MAX = 2;
-const HIV_MOD_MAX = 6;
+const HIV_MOD_MAX = 5;
 const PREG_LOW_MAX = 1;
-const PREG_MOD_MAX = 4;
+const PREG_MOD_MAX = 3;
 
 export function scoreAnswers(answers) {
   let hiv = 0;
@@ -49,95 +49,76 @@ export function recommendationsFor(answers) {
 
   if (a.active === 'none') {
     recs.push({
-      title: 'Knowledge is power',
-      body:
-        'Even if you’re not sexually active right now, learning about your options puts you in control later.',
-      actionLabel: 'Browse Learn',
+      title: 'recActiveNoneTitle',
+      body: 'recActiveNoneBody',
+      actionLabel: 'recActiveNoneAction',
       actionType: 'learn',
     });
     return recs;
   }
 
-  if (a.tested === 'never' || a.tested === 'old') {
+  if (a.tested === 'never' || a.tested === 'old' || a.tested === 'year') {
     recs.push({
-      title: 'Consider a quick HIV test',
-      body:
-        'Tests are free, fast, and confidential. Knowing your status is the first step in caring for yourself.',
-      actionLabel: 'Find a clinic',
+      title: 'recTestedTitle',
+      body: 'recTestedBody',
+      actionLabel: 'recTestedAction',
       actionType: 'find',
     });
   }
 
-  if (a.condom === 'sometimes' || a.condom === 'never') {
+  if (a.protection === 'contra' || a.protection === 'none' || a.protection === 'unsure') {
     recs.push({
-      title: 'Condoms protect against both',
-      body:
-        'They are the only method that prevents both HIV and pregnancy. Free at most clinics — both partners can carry them.',
-      actionLabel: 'Read about condoms',
+      title: 'recCondomTitle',
+      body: 'recCondomBody',
+      actionLabel: 'recCondomAction',
       actionType: 'learn',
       topicId: 'contraception',
     });
   }
 
-  if (a.contra === 'no' || a.contra === 'emergency' || a.contra === 'unsure') {
+  if (a.protection === 'condom' || a.protection === 'none' || a.protection === 'unsure') {
     recs.push({
-      title: 'Other contraception worth knowing',
-      body:
-        'The pill, injection, and implant are very effective and discreet. A clinician can help you pick one that suits your life.',
-      actionLabel: 'See options',
+      title: 'recContraTitle',
+      body: 'recContraBody',
+      actionLabel: 'recContraAction',
       actionType: 'learn',
       topicId: 'contraception',
     });
   }
 
-  if (a.partners === 'few' || a.partners === 'many' || a.prep === 'no' || a.prep === 'know') {
+  if (a.active === 'many' || a.prep === 'no' || a.prep === 'know') {
     recs.push({
-      title: 'PrEP could be a good fit',
-      body:
-        'PrEP is a daily pill that prevents HIV — over 99% effective when taken right. Free at many youth-friendly clinics.',
-      actionLabel: 'Learn about PrEP',
+      title: 'recPrepTitle',
+      body: 'recPrepBody',
+      actionLabel: 'recPrepAction',
       actionType: 'learn',
       topicId: 'prep',
     });
   }
 
-  if (a.sti === 'untreated' || a.sti === 'unsure') {
+  if (a.health === 'sti' || a.health === 'both') {
     recs.push({
-      title: 'Get an STI check',
-      body:
-        'STI symptoms (or symptoms you’re unsure about) are usually easy to treat — but untreated they can cause bigger problems. Clinics handle this confidentially.',
-      actionLabel: 'Find a clinic',
+      title: 'recStiTitle',
+      body: 'recStiBody',
+      actionLabel: 'recStiAction',
       actionType: 'find',
     });
   }
 
-  if (a.relationship === 'some' || a.relationship === 'rare') {
+  if (a.health === 'unsafe' || a.health === 'both') {
     recs.push({
-      title: 'You deserve to feel safe',
-      body:
-        'If saying no or asking for a condom feels risky, a youth counsellor can talk with you privately. You don’t have to handle this alone.',
-      actionLabel: 'Find a counsellor',
+      title: 'recSafeTitle',
+      body: 'recSafeBody',
+      actionLabel: 'recSafeAction',
       actionType: 'find',
-    });
-  }
-
-  if (a.substances === 'often') {
-    recs.push({
-      title: 'Plan ahead for nights out',
-      body:
-        'When alcohol is in the picture, decisions get harder. Carrying a condom and agreeing limits with a friend before going out really helps.',
-      actionLabel: 'Read more',
-      actionType: 'learn',
-      topicId: 'consent',
     });
   }
 
   if (recs.length === 0) {
     recs.push({
-      title: 'You’re doing well',
-      body:
-        'Stay informed and check in again whenever life changes. Knowing your status once a year is a good habit.',
-      actionLabel: 'Browse Learn',
+      title: 'recDoingWellTitle',
+      body: 'recDoingWellBody',
+      actionLabel: 'recDoingWellAction',
       actionType: 'learn',
     });
   }

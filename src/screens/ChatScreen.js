@@ -33,6 +33,39 @@ export default function ChatScreen({ navigation }) {
     requestAnimationFrame(() => scrollRef.current?.scrollToEnd({ animated: true }));
   }, [chatHistory.length]);
 
+  const localQuick = {
+    en: [
+      { label: 'Broke a condom? 🩹', q: 'I broke a condom' },
+      { label: 'What is PrEP? 💊', q: 'What is PrEP' },
+      { label: 'Need PEP? ⏰', q: 'I need PEP' },
+      { label: 'Emergency contraception? 🚨', q: 'Emergency contraception' },
+      { label: 'Free testing? 🆓', q: 'Where can I get a free test' }
+    ],
+    sn: [
+      { label: 'Kondomu rikatsemuka? 🩹', q: 'I broke a condom' },
+      { label: 'Chii chinonzi PrEP? 💊', q: 'What is PrEP' },
+      { label: 'Unoda PEP? ⏰', q: 'I need PEP' },
+      { label: 'Emergency pill? 🚨', q: 'Emergency contraception' },
+      { label: 'Test yeHIV mahara? 🆓', q: 'Where can I get a free test' }
+    ],
+    nd: [
+      { label: 'Ikhondomu lidabukile? 🩹', q: 'I broke a condom' },
+      { label: 'Kuyini i-PrEP? 💊', q: 'What is PrEP' },
+      { label: 'Udinga i-PEP? ⏰', q: 'I need PEP' },
+      { label: 'Emergency pill? 🚨', q: 'Emergency contraception' },
+      { label: 'Ukuhlola mahhala? 🆓', q: 'Where can I get a free test' }
+    ]
+  };
+
+  const quickQuestions = localQuick[language] || localQuick.en;
+
+  const handleQuickSend = (qVal) => {
+    appendChat({ role: 'user', text: qVal });
+    setTimeout(() => {
+      appendChat({ role: 'bot', text: reply(qVal) });
+    }, 250);
+  };
+
   const send = () => {
     const value = text.trim();
     if (!value) return;
@@ -69,11 +102,29 @@ export default function ChatScreen({ navigation }) {
                 msg.role === 'user' ? styles.bubbleUser : styles.bubbleBot,
               ]}>
               <Text style={msg.role === 'user' ? styles.bubbleUserText : styles.bubbleBotText}>
-                {msg.text}
+                {msg.role === 'bot' ? t(msg.text, language) : msg.text}
               </Text>
             </View>
           ))}
         </ScrollView>
+
+        <View style={styles.quickRepliesWrapper}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.quickRepliesList}
+          >
+            {quickQuestions.map((item, idx) => (
+              <TouchableOpacity
+                key={idx}
+                onPress={() => handleQuickSend(item.q)}
+                style={styles.quickPill}
+              >
+                <Text style={styles.quickPillText}>{item.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
 
         <View style={styles.composer}>
           <TextInput
@@ -154,5 +205,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: spacing.sm,
+  },
+  quickRepliesWrapper: {
+    paddingVertical: 8,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+    backgroundColor: colors.surface,
+  },
+  quickRepliesList: {
+    paddingHorizontal: spacing.md,
+    flexDirection: 'row',
+    gap: spacing.sm,
+  },
+  quickPill: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: 8,
+    borderRadius: radius.pill,
+    backgroundColor: '#F3F4F6',
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  quickPillText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: colors.primary,
   },
 });

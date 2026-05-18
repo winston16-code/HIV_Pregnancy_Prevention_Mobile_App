@@ -18,6 +18,24 @@ export default function LearnScreen({ navigation }) {
         <Text style={styles.title}>{t('learnTitle', language)}</Text>
         <Text style={styles.sub}>{t('learnSub', language)}</Text>
 
+        <TouchableOpacity
+          onPress={() => navigation.navigate('MethodMatcher')}
+          activeOpacity={0.85}
+          style={{ marginBottom: spacing.md }}>
+          <Card style={styles.matcherCard}>
+            <View style={styles.matcherRow}>
+              <View style={styles.matcherIconBox}>
+                <Ionicons name="color-wand" size={24} color="#6D28D9" />
+              </View>
+              <View style={{ flex: 1, marginLeft: spacing.md }}>
+                <Text style={styles.matcherTitle}>{t('methodMatcherTitle', language)}</Text>
+                <Text style={styles.matcherSub}>{t('takeMatcher', language)}</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={22} color="#6D28D9" />
+            </View>
+          </Card>
+        </TouchableOpacity>
+
         {topics.map((topic) => {
           const score = quizProgress[topic.id];
           return (
@@ -75,4 +93,21 @@ const styles = StyleSheet.create({
     borderRadius: radius.pill,
   },
   badgeText: { color: colors.success, fontWeight: '700', fontSize: 12, marginLeft: 2 },
+  matcherCard: {
+    backgroundColor: '#F5F3FF',
+    borderColor: '#E9D5FF',
+    borderWidth: 1,
+    padding: spacing.md,
+  },
+  matcherRow: { flexDirection: 'row', alignItems: 'center' },
+  matcherIconBox: {
+    width: 44,
+    height: 44,
+    borderRadius: radius.md,
+    backgroundColor: '#EDE9FE',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  matcherTitle: { fontSize: 16, fontWeight: '700', color: '#5B21B6' },
+  matcherSub: { fontSize: 13, color: '#7C3AED', marginTop: 2 },
 });

@@ -15,6 +15,9 @@ import FindScreen from '../screens/FindScreen';
 import ChatScreen from '../screens/ChatScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import RemindersScreen from '../screens/RemindersScreen';
+import PeriodTrackerScreen from '../screens/PeriodTrackerScreen';
+import MethodMatcherScreen from '../screens/MethodMatcherScreen';
+import SOSEmergencyScreen from '../screens/SOSEmergencyScreen';
 
 import { colors } from '../theme/colors';
 import { useAppStore } from '../state/useAppStore';
@@ -39,6 +42,7 @@ function LearnStack() {
       <Stack.Screen name="LearnHome" component={LearnScreen} />
       <Stack.Screen name="Topic" component={TopicScreen} />
       <Stack.Screen name="Quiz" component={QuizScreen} />
+      <Stack.Screen name="MethodMatcher" component={MethodMatcherScreen} />
     </Stack.Navigator>
   );
 }
@@ -48,6 +52,8 @@ function HomeStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomeMain" component={HomeScreen} />
       <Stack.Screen name="Chat" component={ChatScreen} />
+      <Stack.Screen name="PeriodTracker" component={PeriodTrackerScreen} />
+      <Stack.Screen name="SOSEmergency" component={SOSEmergencyScreen} />
     </Stack.Navigator>
   );
 }

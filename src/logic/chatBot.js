@@ -5,7 +5,7 @@ import { faqRules, fallbackAnswer } from '../data/chatFAQ';
 // Ties go to the rule with the higher keyword density (matches / total).
 export function reply(userText) {
   const text = (userText || '').toLowerCase();
-  if (!text.trim()) return fallbackAnswer;
+  if (!text.trim()) return 'chatFaqFallback';
 
   let best = null;
   let bestScore = 0;
@@ -24,6 +24,6 @@ export function reply(userText) {
     }
   }
 
-  if (!best) return fallbackAnswer;
-  return best.answer;
+  if (!best) return 'chatFaqFallback';
+  return `chatFaq_${best.id}`;
 }

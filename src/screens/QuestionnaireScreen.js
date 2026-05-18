@@ -56,7 +56,7 @@ export default function QuestionnaireScreen({ navigation, route }) {
       </View>
 
       <ScrollView contentContainerStyle={styles.body}>
-        <Text style={styles.qText}>{question.text}</Text>
+        <Text style={styles.qText}>{t(question.text, language)}</Text>
         {question.options.map((opt) => (
           <TouchableOpacity
             key={opt.value}
@@ -66,7 +66,7 @@ export default function QuestionnaireScreen({ navigation, route }) {
             <View style={[styles.radio, selected === opt.value && styles.radioActive]}>
               {selected === opt.value ? <View style={styles.radioInner} /> : null}
             </View>
-            <Text style={styles.optLabel}>{opt.label}</Text>
+            <Text style={styles.optLabel}>{t(opt.label, language)}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
